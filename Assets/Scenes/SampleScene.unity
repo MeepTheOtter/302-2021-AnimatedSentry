@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 42530827}
   - component: {fileID: 42530826}
   - component: {fileID: 42530830}
+  - component: {fileID: 42530831}
   m_Layer: 0
   m_Name: Monster 1
   m_TagString: Untagged
@@ -231,6 +232,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c68e4737f93894488d081dd359b5e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &42530831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42530825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec223cbf5563fe469c6b53b412ba8b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  isDead: 0
+  iframes: 0
+  maxIframes: 100
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +437,7 @@ GameObject:
   - component: {fileID: 1168807853}
   - component: {fileID: 1168807852}
   - component: {fileID: 1168807851}
+  - component: {fileID: 1168807856}
   m_Layer: 0
   m_Name: Monster 1 (1)
   m_TagString: Untagged
@@ -515,6 +533,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1168807856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168807850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec223cbf5563fe469c6b53b412ba8b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  isDead: 0
+  iframes: 0
+  maxIframes: 100
 --- !u!114 &1447852083 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3408757127641273678, guid: 987074ee20b68224fa0e6a39069f1efa, type: 3}
@@ -573,6 +607,7 @@ MonoBehaviour:
   moveScript: {fileID: 1447852083}
   cameraSensitivityX: 5
   cameraSensitivityY: -5
+  shakeIntensity: 0
 --- !u!1 &1702265246
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,6 +803,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3408757127641273678, guid: 987074ee20b68224fa0e6a39069f1efa, type: 3}
+      propertyPath: jumpMult
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3408757127641273678, guid: 987074ee20b68224fa0e6a39069f1efa, type: 3}
+      propertyPath: gravityMult
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3989662334835398157, guid: 987074ee20b68224fa0e6a39069f1efa, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3989662334835398157, guid: 987074ee20b68224fa0e6a39069f1efa, type: 3}
       propertyPath: m_Name
       value: The Player

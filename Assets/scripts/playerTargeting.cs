@@ -7,6 +7,7 @@ public class PlayerTargeting : MonoBehaviour {
 
     public Transform target;
     public bool wantsToTarget = false;
+    public bool wantsToAttack = false;
     public float visionDistance = 10;
     public float visionAngle = 45;
 
@@ -15,13 +16,39 @@ public class PlayerTargeting : MonoBehaviour {
     float cooldownScan = 0;
     float cooldownPick = 0;
 
+    float coolDownShoot = 0;
+    public float roundsPerSecond = 10f;
+    public bool isArmRightTimeToFire = true;
+    public bool isArmLeftTimeToFire = false;
+
+    public Transform armL;
+    public Transform armR;
+
+    private Vector3 startPosArmL;
+    private Vector3 startPosArmR;
+
+    public ParticleSystem muzzleFlashPreafab;
+    public Transform handL;
+    public Transform handR;
+
+    CameraOrbit camOrbit;
+
+    //TO-DO: Change it so the whole torse gets pushed back instead of arms
+    //TO-DO: change it so the arms attack one after another
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        startPosArmL = armL.localPosition;
+        startPosArmR = armR.localPosition;
+
+        camOrbit = Camera.main.GetComponentInParent<CameraOrbit>();
     }
 
     void Update() {
         wantsToTarget = Input.GetButton("Fire2");
+        wantsToAttack = Input.GetButton("Fire1");
 
         if (!wantsToTarget) target = null;
 
@@ -30,9 +57,56 @@ public class PlayerTargeting : MonoBehaviour {
 
         cooldownPick -= Time.deltaTime; // counting down...
         if (cooldownPick <= 0) PickATarget(); // do this when countdown finished
+        
+        if(coolDownShoot > 0) coolDownShoot -= Time.deltaTime;
 
         if (target && !canSeeThing(target)) target = null;
 
+        SlideArmsHome();
+
+        doAttack();
+    }
+
+    private void SlideArmsHome()
+    {
+        armL.localPosition = AnimMath.Slide(armL.localPosition, startPosArmL, .001f);
+        armR.localPosition = AnimMath.Slide(armR.localPosition, startPosArmR, .001f);
+
+    }
+
+    private void doAttack()
+    {
+        if (!wantsToTarget) return;
+        if (!wantsToAttack) return;
+        if (target == null) return;
+        if (!canSeeThing(target)) return;
+        if (coolDownShoot > 0) return;
+
+
+        HealthSystem targetHealth = target.GetComponent<HealthSystem>();
+
+        if(targetHealth)
+        {
+            targetHealth.takeDamage(20);
+        }
+
+        coolDownShoot = 1 / roundsPerSecond;
+
+        // attack
+
+        camOrbit.Shake(1);
+
+        if(handL) Instantiate(muzzleFlashPreafab, handL.position, handL.rotation);
+        if(handR) Instantiate(muzzleFlashPreafab, handR.position, handR.rotation);
+
+        // trigger arm animation
+
+        armL.localEulerAngles += new Vector3(-20, 0, 0);
+        armR.localEulerAngles += new Vector3(-20, 0, 0);
+
+
+        armL.position += -armL.forward * .1f;
+        armR.position += -armR.forward * .1f;
     }
 
     private bool canSeeThing(Transform thing)
