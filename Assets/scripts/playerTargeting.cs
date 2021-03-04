@@ -33,6 +33,8 @@ public class PlayerTargeting : MonoBehaviour {
 
     CameraOrbit camOrbit;
 
+    public AudioSource sound;
+
     //TO-DO: Change it so the whole torse gets pushed back instead of arms
     //TO-DO: change it so the arms attack one after another
 
@@ -88,6 +90,7 @@ public class PlayerTargeting : MonoBehaviour {
         if (targetHealth)
         {
             targetHealth.takeDamage(20);
+            sound.Play();
         }
 
         coolDownShoot = 1 / roundsPerSecond;

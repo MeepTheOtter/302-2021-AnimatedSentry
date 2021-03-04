@@ -37,7 +37,8 @@ public class TurretTargeting : MonoBehaviour
 
     public float idleTimer = 0;
 
-    
+    public AudioSource sound;
+    public AudioClip cannon;
 
     private void Start()
     {
@@ -104,6 +105,7 @@ public class TurretTargeting : MonoBehaviour
         if (targetHealth)
         {
             targetHealth.takeDamage(damage, .5f);
+            sound.PlayOneShot(cannon);
         }
 
         coolDownShoot = 1 / roundsPerSecond;

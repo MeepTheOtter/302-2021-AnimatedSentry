@@ -24,6 +24,10 @@ PrefabInstance:
       value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 7417745913345848171, guid: eaca0b5655de2384ebbc478a9840f03b, type: 3}
+      propertyPath: cannon
+      value: 
+      objectReference: {fileID: 8300000, guid: aae7240f3657f3b46bce0a664ed30d8a, type: 3}
+    - target: {fileID: 7417745913345848171, guid: eaca0b5655de2384ebbc478a9840f03b, type: 3}
       propertyPath: damage
       value: 20
       objectReference: {fileID: 0}
