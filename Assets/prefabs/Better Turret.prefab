@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4233784119925897709
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6642893711832562428, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d712adf122db41439733fc4b345d69f, type: 2}
+    - target: {fileID: 6642893711837922142, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d712adf122db41439733fc4b345d69f, type: 2}
+    - target: {fileID: 6642893712006763348, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d712adf122db41439733fc4b345d69f, type: 2}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.510498
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.45999908
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 16.016392
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736706, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736707, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: m_Name
+      value: Better Turret
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736708, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: maxHealth
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736710, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: visionDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712475736710, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: roundsPerSecond
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642893712596178227, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}
+      propertyPath: doIdleRot
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8a6dfbc0e4cd65048b16f9137489c6e6, type: 3}

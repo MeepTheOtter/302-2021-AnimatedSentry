@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTargeting : MonoBehaviour {
+public class TurretTargeting : MonoBehaviour
+{
 
     public Transform target;
     public bool wantsToTarget = false;
@@ -11,67 +12,82 @@ public class PlayerTargeting : MonoBehaviour {
     public float visionDistance = 10;
     public float visionAngle = 45;
 
-    private List<TargetableThing> potentialTargets = new List<TargetableThing>();
+    private List<PlayerMovement> potentialTargets = new List<PlayerMovement>();
 
     float cooldownScan = 0;
     float cooldownPick = 0;
 
     float coolDownShoot = 0;
-    public float roundsPerSecond = 10f;
-    public bool isArmRightTimeToFire = true;
-    public bool isArmLeftTimeToFire = false;
+    public float roundsPerSecond = 1f;
+    public float damage = 20f;
+    public bool isCannonTopTimeToFire = true;
+    public bool isCannonBottomTimeToFire = false;
 
-    public Transform armL;
-    public Transform armR;
+    public Transform cannonTop;
+    public Transform cannonBottom;
 
-    private Vector3 startPosArmL;
-    private Vector3 startPosArmR;
+    private Vector3 startPosCannonTop;
+    private Vector3 startPosCannonBottom;
 
     public ParticleSystem muzzleFlashPreafab;
-    public Transform handL;
-    public Transform handR;
+    public Transform turretTop;
+    public Transform turretBottom;
 
     CameraOrbit camOrbit;
 
-    //TO-DO: Change it so the whole torse gets pushed back instead of arms
-    //TO-DO: change it so the arms attack one after another
+    public float idleTimer = 0;
+
+    
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-
-        startPosArmL = armL.localPosition;
-        startPosArmR = armR.localPosition;
+        startPosCannonTop = cannonTop.localPosition;
+        startPosCannonBottom = cannonBottom.localPosition;
 
         camOrbit = Camera.main.GetComponentInParent<CameraOrbit>();
     }
 
-    void Update() {
-        wantsToTarget = Input.GetButton("Fire2");
-        wantsToAttack = Input.GetButton("Fire1");
+    void Update()
+    {
+        wantsToTarget = true;
+        wantsToAttack = true;
 
         if (!wantsToTarget) target = null;
+
+        if (idleTimer > 0) idleTimer -= Time.deltaTime;
 
         cooldownScan -= Time.deltaTime; // counting down...
         if (cooldownScan <= 0 || (target == null && wantsToTarget)) ScanForTargets(); // do this when countdown finished
 
         cooldownPick -= Time.deltaTime; // counting down...
         if (cooldownPick <= 0) PickATarget(); // do this when countdown finished
-        
-        if(coolDownShoot > 0) coolDownShoot -= Time.deltaTime;
+
+        if (coolDownShoot > 0) coolDownShoot -= Time.deltaTime;
 
         if (target && !canSeeThing(target)) target = null;
+
+        if (target == null) idleSpin();
 
         SlideArmsHome();
 
         doAttack();
     }
 
+    private void idleSpin()
+    {
+        Quaternion targetRot;
+        if (idleTimer <= 0)
+        {
+            targetRot = new Quaternion(0, UnityEngine.Random.Range(0, 360), 0, 0);
+            idleTimer = 5;
+        }
+        
+    }
+
     private void SlideArmsHome()
     {
-        armL.localPosition = AnimMath.Slide(armL.localPosition, startPosArmL, .001f);
-        armR.localPosition = AnimMath.Slide(armR.localPosition, startPosArmR, .001f);
-
+        cannonTop.localPosition = AnimMath.Slide(cannonTop.localPosition, startPosCannonTop, .001f);
+        cannonBottom.localPosition = AnimMath.Slide(cannonBottom.localPosition, startPosCannonBottom, .001f);
     }
 
     private void doAttack()
@@ -87,35 +103,35 @@ public class PlayerTargeting : MonoBehaviour {
 
         if (targetHealth)
         {
-            targetHealth.takeDamage(20);
+            targetHealth.takeDamage(damage, .5f);
         }
 
         coolDownShoot = 1 / roundsPerSecond;
 
         // attack
 
-        camOrbit.Shake(.75f);
+        camOrbit.Shake(1);
 
-        if (isArmLeftTimeToFire)
+        if (isCannonBottomTimeToFire)
         {
-            if (handL) Instantiate(muzzleFlashPreafab, handL.position, handL.rotation);
-            armL.localEulerAngles += new Vector3(-20, 0, 0);
-            armL.position += -armL.forward * .1f;
+            if (turretTop) Instantiate(muzzleFlashPreafab, turretTop.position, turretTop.rotation);
+            cannonTop.localEulerAngles += new Vector3(-5, 0, 0);
+            cannonTop.position += -cannonTop.forward * .5f;
             flipHands();
-        } 
-        else if (isArmRightTimeToFire)
+        }
+        else if (isCannonTopTimeToFire)
         {
-            if (handR) Instantiate(muzzleFlashPreafab, handR.position, handR.rotation);
-            armR.localEulerAngles += new Vector3(-20, 0, 0);
-            armR.position += -armR.forward * .1f;
+            if (turretBottom) Instantiate(muzzleFlashPreafab, turretBottom.position, turretBottom.rotation);
+            cannonBottom.localEulerAngles += new Vector3(-5, 0, 0);
+            cannonBottom.position += -cannonBottom.forward * .1f;
             flipHands();
-        }        
+        }
     }
 
     private void flipHands()
     {
-        isArmLeftTimeToFire = !isArmLeftTimeToFire;
-        isArmRightTimeToFire = !isArmRightTimeToFire;
+        isCannonBottomTimeToFire = !isCannonBottomTimeToFire;
+        isCannonTopTimeToFire = !isCannonTopTimeToFire;
     }
 
     private bool canSeeThing(Transform thing)
@@ -137,18 +153,20 @@ public class PlayerTargeting : MonoBehaviour {
         return true;
     }
 
-    private void ScanForTargets() {
+    private void ScanForTargets()
+    {
 
         // do the next scan in 1 seconds:
         cooldownScan = 1;
 
         // empty the list:
         potentialTargets.Clear();
-        
+
         // refill the list:
 
-        TargetableThing[] things = GameObject.FindObjectsOfType<TargetableThing>();
-        foreach(TargetableThing thing in things) {
+        PlayerMovement[] things = GameObject.FindObjectsOfType<PlayerMovement>();
+        foreach (PlayerMovement thing in things)
+        {
             // check how far away thing is
 
             if (canSeeThing(thing.transform))
@@ -159,7 +177,8 @@ public class PlayerTargeting : MonoBehaviour {
         }
     }
 
-    void PickATarget() {
+    void PickATarget()
+    {
 
         cooldownPick = .25f;
 
@@ -169,14 +188,17 @@ public class PlayerTargeting : MonoBehaviour {
         float closestDistanceSoFar = 0;
 
         // find closest targetable-thing and sets it as our target:
-        foreach(TargetableThing pt in potentialTargets) {
-            
+        foreach (PlayerMovement pt in potentialTargets)
+        {
+
             float dd = (pt.transform.position - transform.position).sqrMagnitude;
 
-            if(dd < closestDistanceSoFar || target == null) {
+            if (dd < closestDistanceSoFar || target == null)
+            {
                 target = pt.transform;
                 closestDistanceSoFar = dd;
-            }            
+            }
         }
     }
 }
+

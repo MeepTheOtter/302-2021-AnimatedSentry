@@ -25,7 +25,7 @@ public class CameraOrbit : MonoBehaviour {
     void Update() {
         PlayerOrbitCamera();
 
-        transform.position = moveScript.transform.position;
+        if (moveScript != null && targetScript != null) transform.position = moveScript.transform.position;
 
         // if aiming, set camera rotation to look at target
         rotateCamToLookAtTarget();
